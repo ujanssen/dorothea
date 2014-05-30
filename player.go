@@ -1,5 +1,7 @@
 package dorothea
 
+import "math/rand"
+
 type Player struct {
 	Color   Color
 	OutArea int
@@ -11,4 +13,8 @@ func createPlayers(playerColors []Color) []Player {
 		players[i] = Player{OutArea: 4, Color: playerColors[i]}
 	}
 	return players
+}
+
+func (p Player) ThrowDice() int {
+	return rand.Intn(6) + 1
 }

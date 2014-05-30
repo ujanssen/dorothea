@@ -7,6 +7,37 @@ import (
 
 // go test src/github.com/ujanssen/dorothea/game_test.go
 
+// The game can be played by 2, 3 or 4 players
+func TestGameWith2Players(t *testing.T) {
+	testGameWithValidNPlayers(2, 2, t)
+}
+func TestGameWith3Players(t *testing.T) {
+	testGameWithValidNPlayers(3, 3, t)
+}
+func TestGameWith4Players(t *testing.T) {
+	testGameWithValidNPlayers(4, 4, t)
+}
+
+// The game can not be played by 1 or 5 players
+func TestGameWith1Player(t *testing.T) {
+	testGameWithInvalidNPlayers(1, t)
+}
+func TestGameWith5Players(t *testing.T) {
+	testGameWithInvalidNPlayers(5, t)
+}
+
+// Each player has 4 game pieces, which are in the "out" area when the game starts
+func TestGameOutAreaAtStart(t *testing.T) {
+	g, _ := dorothea.NewGame(getNPlayerColors(4))
+	for _, player := range g.Players {
+		if player.OutArea != 4 {
+			t.Errorf("player.OutArea = %v, want 4", player.OutArea)
+		}
+	}
+}
+
+// private ----------------------------------------------------
+
 func getNPlayerColors(n int) []dorothea.Color {
 	playerColors := make([]dorothea.Color, 0)
 	if n > 1 {
@@ -41,34 +72,5 @@ func testGameWithInvalidNPlayers(n int, t *testing.T) {
 	g, err := dorothea.NewGame(getNPlayerColors(n))
 	if err == nil {
 		t.Errorf("dorothea.NewGame(%v) = %v, want error", n, g.Players)
-	}
-}
-
-// The game can be played by 2, 3 or 4 players
-func TestGameWith2Players(t *testing.T) {
-	testGameWithValidNPlayers(2, 2, t)
-}
-func TestGameWith3Players(t *testing.T) {
-	testGameWithValidNPlayers(3, 3, t)
-}
-func TestGameWith4Players(t *testing.T) {
-	testGameWithValidNPlayers(4, 4, t)
-}
-
-// The game can not be played by 1 or 5 players
-func TestGameWith1Player(t *testing.T) {
-	testGameWithInvalidNPlayers(1, t)
-}
-func TestGameWith5Players(t *testing.T) {
-	testGameWithInvalidNPlayers(5, t)
-}
-
-// Each player has 4 game pieces, which are in the "out" area when the game starts
-func TestGameOutAreaAtStart(t *testing.T) {
-	g, _ := dorothea.NewGame(getNPlayerColors(4))
-	for _, player := range g.Players {
-		if player.OutArea != 4 {
-			t.Errorf("player.OutArea = %v, want 4", player.OutArea)
-		}
 	}
 }
