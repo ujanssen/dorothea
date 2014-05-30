@@ -4,19 +4,34 @@ import (
 	"errors"
 )
 
-type GamePlay interface {
-	newGame(players int) Game
+type Color int
+
+const (
+	Yellow Color = iota
+	Red
+	Blue
+	Green
+)
+
+type Player struct {
+	Color   Color
+	OutArea int
 }
 
 type Game struct {
-	Players int
+	Players []Player
 }
 
-func NewGame(players int) (Game, error) {
-	if players > 1 && players <= 4 {
+func NewGame(playerColors []Color) (Game, error) {
+	p := len(playerColors)
+
+	if p > 1 && p <= 4 {
+		players := make([]Player, p)
+		for i, _ := range players {
+			players[i] = Player{OutArea: 4, Color: playerColors[i]}
+		}
 		g := Game{Players: players}
 		return g, nil
-
 	}
 	return Game{}, errors.New("The game can be played by 2, 3 or 4 players")
 }
