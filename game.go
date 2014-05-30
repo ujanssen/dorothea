@@ -4,20 +4,6 @@ import (
 	"errors"
 )
 
-type Color int
-
-const (
-	Yellow Color = iota
-	Red
-	Blue
-	Green
-)
-
-type Player struct {
-	Color   Color
-	OutArea int
-}
-
 type Game struct {
 	Players []Player
 }
