@@ -5,7 +5,7 @@ import (
 	"testing"
 )
 
-// go test src/github.com/ujanssen/dorothea/dorothea_test.go
+// go test src/github.com/ujanssen/dorothea/game_test.go
 
 func getNPlayerColors(n int) []dorothea.Color {
 	playerColors := make([]dorothea.Color, 0)
