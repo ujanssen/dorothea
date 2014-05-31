@@ -36,6 +36,30 @@ func TestGameOutAreaAtStart(t *testing.T) {
 	}
 }
 
+// Start a Game with Red and Green.
+// Red should be the first active player.
+// Green should be the next player.
+// Red should be the next player.
+func TestGameFirstPlayerAtStart(t *testing.T) {
+	playerColors := []dorothea.Color{dorothea.Red, dorothea.Green}
+	g, _ := dorothea.NewGame(playerColors)
+
+	c := g.CurrentPlayer().Color
+	if c != dorothea.Red {
+		t.Errorf("g.CurrentPlayer().Color = %v, want dorothea.Red", c)
+	}
+
+	e := g.NextPlayer().Color
+	if e != dorothea.Green {
+		t.Errorf("g.NextPlayer().Color = %v, want dorothea.Green", e)
+	}
+
+	r := g.NextPlayer().Color
+	if r != dorothea.Red {
+		t.Errorf("g.NextPlayer().Color = %v, want dorothea.Red", r)
+	}
+}
+
 // private ----------------------------------------------------
 
 func getNPlayerColors(n int) []dorothea.Color {
