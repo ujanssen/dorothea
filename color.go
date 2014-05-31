@@ -3,7 +3,8 @@ package dorothea
 type Color int
 
 const (
-	Yellow Color = iota
+	Empty Color = iota
+	Yellow
 	Red
 	Blue
 	Green

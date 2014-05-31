@@ -60,6 +60,18 @@ func TestGameFirstPlayerAtStart(t *testing.T) {
 	}
 }
 
+// At game start, all fields should be empty
+func TestGameFieldsAtStart(t *testing.T) {
+	playerColors := []dorothea.Color{dorothea.Red, dorothea.Green}
+	g, _ := dorothea.NewGame(playerColors)
+
+	for _, field := range g.Fields {
+		if field != dorothea.Empty {
+			t.Errorf("field = %v, want dorothea.Empty", field)
+		}
+	}
+}
+
 // private ----------------------------------------------------
 
 func getNPlayerColors(n int) []dorothea.Color {
