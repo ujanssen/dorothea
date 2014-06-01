@@ -5,7 +5,7 @@ import (
 )
 
 type Game struct {
-	Players      []Player
+	Players      []*Player
 	Fields       []Color
 	activePlayer int
 }
@@ -21,11 +21,11 @@ func NewGame(playerColors []Color) (*Game, error) {
 	return &Game{}, errors.New("The game can be played by 2, 3 or 4 players")
 }
 
-func (g *Game) CurrentPlayer() Player {
+func (g *Game) CurrentPlayer() *Player {
 	return g.Players[g.activePlayer]
 }
 
-func (g *Game) NextPlayer() Player {
+func (g *Game) NextPlayer() *Player {
 	g.activePlayer = g.activePlayer + 1
 	if g.activePlayer == len(g.Players) {
 		g.activePlayer = 0
