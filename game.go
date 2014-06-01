@@ -36,6 +36,8 @@ func (g *Game) NextPlayer() *Player {
 func (g *Game) GameOver() bool {
 	return g.CurrentPlayer().HasWon()
 }
+
+/* unused
 func (g *Game) PlayTheGame() {
 	for {
 		g.CurrentPlayer().PlayMove(g)
@@ -45,3 +47,4 @@ func (g *Game) PlayTheGame() {
 		g.NextPlayer()
 	}
 }
+*/

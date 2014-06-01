@@ -43,11 +43,13 @@ func (p *Player) PiecesInHomeArea() int {
 	return number
 }
 
+/* unused
 func (p *Player) PlayMove(g *Game) {
 	dice := p.ThrowDice()
 	p.PlayMoveWithDice(g, dice)
 
 }
+*/
 
 func (p *Player) StartField() int {
 	return StartField[p.Color]
