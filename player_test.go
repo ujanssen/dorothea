@@ -37,3 +37,25 @@ func TestPlayerHasWon(t *testing.T) {
 		t.Errorf("p.HasWon() = false, want true")
 	}
 }
+
+func TestPlayerOnStartThrowsASix(t *testing.T) {
+	g, _ := dorothea.NewGame([]dorothea.Color{dorothea.Red, dorothea.Green})
+
+	p := g.CurrentPlayer()
+	start := p.StartField()
+
+	p.PlayMoveWithDice(g, 6)
+
+	if p.OutArea != 3 {
+		t.Errorf("p.OutArea = %v, want 3", p.OutArea)
+	}
+	if g.Fields[start] != p.Color {
+		t.Errorf("g.Fields[%v] = %v, want %v", start, g.Fields[start], p.Color)
+	}
+	if len(p.Position) != 1 {
+		t.Errorf("len(p.Position) = %v, want 1", len(p.Position))
+	}
+	if p.Position[0] != start {
+		t.Errorf("p.Position[0] = %v, want %v", p.Position[0], start)
+	}
+}

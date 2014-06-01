@@ -32,3 +32,16 @@ func (g *Game) NextPlayer() *Player {
 	}
 	return g.CurrentPlayer()
 }
+
+func (g *Game) GameOver() bool {
+	return g.CurrentPlayer().HasWon()
+}
+func (g *Game) PlayTheGame() {
+	for {
+		g.CurrentPlayer().PlayMove(g)
+		if g.GameOver() {
+			return
+		}
+		g.NextPlayer()
+	}
+}
