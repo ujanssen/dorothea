@@ -39,8 +39,7 @@ func TestPlayerHasWon(t *testing.T) {
 }
 
 func TestPlayerOnStartThrowsASix(t *testing.T) {
-	g, _ := dorothea.NewGame([]dorothea.Color{dorothea.Red, dorothea.Green})
-
+	g := newGame()
 	p := g.CurrentPlayer()
 	start := p.StartField()
 

@@ -72,7 +72,31 @@ func TestGameFieldsAtStart(t *testing.T) {
 	}
 }
 
+func TestGameOver(t *testing.T) {
+	g := newGame()
+	p := g.CurrentPlayer()
+
+	p.HomeArea[1] = true
+	p.HomeArea[2] = true
+	p.HomeArea[3] = true
+
+	if g.GameOver() == true {
+		t.Errorf("p.GameOver() = true, want false")
+	}
+
+	p.HomeArea[0] = true
+
+	if g.GameOver() == false {
+		t.Errorf("p.GameOver() = false, want true")
+	}
+}
+
 // private ----------------------------------------------------
+
+func newGame() *dorothea.Game {
+	g, _ := dorothea.NewGame([]dorothea.Color{dorothea.Red, dorothea.Green})
+	return g
+}
 
 func getNPlayerColors(n int) []dorothea.Color {
 	playerColors := make([]dorothea.Color, 0)
