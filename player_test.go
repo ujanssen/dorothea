@@ -1,4 +1,4 @@
-package dorothea
+package dorothea_test
 
 import (
 	"github.com/ujanssen/dorothea"
