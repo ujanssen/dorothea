@@ -59,10 +59,14 @@ func (p *Player) IsOwnPieceOnField(g *Game, field int) bool {
 	return g.Fields[field] == p.Color
 }
 
+func (p *Player) CanMoveTo(g *Game, field int) bool {
+	return !p.IsOwnPieceOnField(g, field)
+}
+
 func (p *Player) PlayMoveWithDice(g *Game, dice int) {
 	start := StartField[p.Color]
 
-	if dice == 6 && p.OutArea > 0 && !p.IsOwnPieceOnField(g, start) {
+	if dice == 6 && p.OutArea > 0 && p.CanMoveTo(g, start) {
 		g.Fields[start] = p.Color
 		p.OutArea = p.OutArea - 1
 		p.Position = append(p.Position, start)
