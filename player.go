@@ -33,10 +33,10 @@ func (p *Player) ThrowDice() int {
 
 // A player has won, if he has four pieces in the home area
 func (p *Player) HasWon() bool {
-	return p.PiecesInHomeArea() == 4
+	return p.PinsInHomeArea() == 4
 }
 
-func (p *Player) PiecesInHomeArea() int {
+func (p *Player) PinsInHomeArea() int {
 	number := 0
 	for _, pin := range p.pins {
 		if pin.IsInHomeArea() {
@@ -45,7 +45,7 @@ func (p *Player) PiecesInHomeArea() int {
 	}
 	return number
 }
-func (p *Player) PiecesInOutArea() int {
+func (p *Player) PinsInOutArea() int {
 	number := 0
 	for _, pin := range p.pins {
 		if pin.IsInOutArea() {
@@ -55,7 +55,7 @@ func (p *Player) PiecesInOutArea() int {
 	return number
 }
 
-func (p *Player) PiecesOnField() int {
+func (p *Player) PinsOnField() int {
 	number := 0
 	for _, pin := range p.pins {
 		if pin.IsOnField() {
@@ -101,7 +101,7 @@ func (p *Player) CanMoveTo(field int) bool {
 func (p *Player) PlayMoveWithDice(dice int) {
 	start := StartField[p.Color]
 
-	if dice == 6 && p.PiecesInOutArea() > 0 && p.CanMoveTo(start) {
+	if dice == 6 && p.PinsInOutArea() > 0 && p.CanMoveTo(start) {
 		p.game.SetPlayerOnField(p, start)
 		p.MovePinFromOutAreaToField(start)
 	}

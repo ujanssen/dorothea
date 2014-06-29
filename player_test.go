@@ -10,8 +10,8 @@ func TestPiecesInOutAreaOnStart(t *testing.T) {
 	p := g.CurrentPlayer()
 
 	want := 4
-	if got := p.PiecesInOutArea(); got != want {
-		t.Errorf("p.PiecesInOutArea() = %v, want %v", got, want)
+	if got := p.PinsInOutArea(); got != want {
+		t.Errorf("p.PinsInOutArea() = %v, want %v", got, want)
 	}
 
 }
@@ -49,6 +49,24 @@ func TestPlayerHasWon(t *testing.T) {
 	}
 }
 
+func TestGetPinOnField(t *testing.T) {
+	g := newGame()
+	p := g.CurrentPlayer()
+	if got := p.GetPinOnField(12); got != nil {
+		t.Errorf("p.GetPinOnField(12) got %v, want nil", got)
+	}
+}
+
+func TestPin(t *testing.T) {
+	g := newGame()
+	p := g.CurrentPlayer()
+	for i := 0; i < 4; i++ {
+		if p.Pin(i) == nil {
+			t.Errorf("p.Pin(i) got nil")
+		}
+	}
+}
+
 func TestPlayerOnStartThrowsASix(t *testing.T) {
 	g := newGame()
 	p := g.CurrentPlayer()
@@ -56,14 +74,14 @@ func TestPlayerOnStartThrowsASix(t *testing.T) {
 
 	p.PlayMoveWithDice(6)
 
-	if p.PiecesInOutArea() != 3 {
-		t.Errorf("p.OutArea = %v, want 3", p.PiecesInOutArea())
+	if p.PinsInOutArea() != 3 {
+		t.Errorf("p.OutArea = %v, want 3", p.PinsInOutArea())
 	}
 	if g.GetColorOnField(start) != p.Color {
 		t.Errorf("g.Fields[%v] = %v, want %v", start, g.GetColorOnField(start), p.Color)
 	}
-	if p.PiecesOnField() != 1 {
-		t.Errorf("p.PiecesOnField() = %v, want 1", p.PiecesOnField())
+	if p.PinsOnField() != 1 {
+		t.Errorf("p.PiecesOnField() = %v, want 1", p.PinsOnField())
 	}
 	if p.GetPinOnField(start) == nil {
 		t.Errorf("p.GetPinOnField(start) = %v, want %v", p.GetPinOnField(start), start)

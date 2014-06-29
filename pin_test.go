@@ -29,3 +29,15 @@ func TestMoveTo(t *testing.T) {
 		t.Errorf("pin.IsOnField() = %v, want %v", got, want)
 	}
 }
+
+func TestMovePinFromOutAreaToField(t *testing.T) {
+	pin := dorothea.NewPin(nil)
+	pin.MoveTo(33)
+
+	defer func() {
+		if e := recover(); e != nil {
+		}
+	}()
+
+	pin.MovePinFromOutAreaToField(12)
+}
