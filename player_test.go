@@ -50,8 +50,8 @@ func TestPlayerOnStartThrowsASix(t *testing.T) {
 	if p.OutArea != 3 {
 		t.Errorf("p.OutArea = %v, want 3", p.OutArea)
 	}
-	if g.Fields[start] != p.Color {
-		t.Errorf("g.Fields[%v] = %v, want %v", start, g.Fields[start], p.Color)
+	if g.GetColorOnField(start) != p.Color {
+		t.Errorf("g.Fields[%v] = %v, want %v", start, g.GetColorOnField(start), p.Color)
 	}
 	if len(p.Position) != 1 {
 		t.Errorf("len(p.Position) = %v, want 1", len(p.Position))

@@ -6,7 +6,7 @@ import (
 
 type Game struct {
 	Players      []*Player
-	Fields       []Color
+	fields       []Color
 	activePlayer int
 }
 
@@ -15,7 +15,7 @@ func NewGame(playerColors []Color) (*Game, error) {
 
 	if p > 1 && p <= 4 {
 		g := &Game{
-			Fields:       make([]Color, 40),
+			fields:       make([]Color, 40),
 			activePlayer: 0}
 
 		(*g).Players = NewPlayers(g, playerColors)
@@ -39,6 +39,13 @@ func (g *Game) NextPlayer() *Player {
 
 func (g *Game) GameOver() bool {
 	return g.CurrentPlayer().HasWon()
+}
+
+func (g *Game) SetPlayerOnField(p *Player, field int) {
+	g.fields[field] = p.Color
+}
+func (g *Game) GetColorOnField(field int) Color {
+	return g.fields[field]
 }
 
 /* unused

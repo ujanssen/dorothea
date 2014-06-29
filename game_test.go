@@ -65,9 +65,10 @@ func TestGameFieldsAtStart(t *testing.T) {
 	playerColors := []dorothea.Color{dorothea.Red, dorothea.Green}
 	g, _ := dorothea.NewGame(playerColors)
 
-	for _, field := range g.Fields {
-		if field != dorothea.Empty {
+	for field := 0; field < 40; field++ {
+		if g.GetColorOnField(field) != dorothea.Empty {
 			t.Errorf("field = %v, want dorothea.Empty", field)
+
 		}
 	}
 }
