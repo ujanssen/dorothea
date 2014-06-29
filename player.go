@@ -8,19 +8,22 @@ type Player struct {
 	game     *Game
 	Color    Color
 	OutArea  int
-	Position []int  // of pieces on board
-	HomeArea []bool // piece in home[0,1,2,3] ?
-	pins     [4]Pin
+	Position []int   // of pieces on board
+	HomeArea [4]*Pin // pin in home[0,1,2,3] ?
+	pins     [4]*Pin
 }
 
 func NewPlayer(g *Game, c Color) *Player {
-	p := Player{
+	var homeArea [4]*Pin
+	p := &Player{
 		game:     g,
 		OutArea:  4,
 		Color:    c,
 		Position: make([]int, 0),
-		HomeArea: make([]bool, 4)}
-	return &p
+		HomeArea: homeArea}
+
+	p.pins = NewPins(p)
+	return p
 }
 
 func NewPlayers(g *Game, playerColors []Color) []*Player {
@@ -43,7 +46,7 @@ func (p *Player) HasWon() bool {
 func (p *Player) PiecesInHomeArea() int {
 	number := 0
 	for _, piece := range p.HomeArea {
-		if piece {
+		if piece != nil {
 			number = number + 1
 		}
 	}
@@ -57,6 +60,10 @@ func (p *Player) PlayMove(g *Game) {
 
 }
 */
+
+func (p *Player) Pin(no int) *Pin {
+	return p.pins[no]
+}
 
 func (p *Player) StartField() int {
 	return StartField[p.Color]

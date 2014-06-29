@@ -5,8 +5,14 @@ type Pin struct {
 	field  int
 }
 
-func NewPin(p *Player) *Pin {
-	pin := &Pin{player: p}
+const OUT_AREA = -1
 
-	return pin
+func NewPins(p *Player) [4]*Pin {
+	var pins [4]*Pin
+	for i := 0; i < 4; i++ {
+		pins[i] = &Pin{
+			player: p,
+			field:  OUT_AREA}
+	}
+	return pins
 }

@@ -6,8 +6,9 @@ import (
 )
 
 func TestNewPin(t *testing.T) {
-	pin := dorothea.NewPin(nil)
-	if pin == nil {
-		t.Errorf("pin == nil")
+	pins := dorothea.NewPins(nil)
+	want := 4
+	if got := len(pins); got != want {
+		t.Errorf("len(pins) = %v, want %v", got, want)
 	}
 }

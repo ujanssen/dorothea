@@ -77,15 +77,15 @@ func TestGameOver(t *testing.T) {
 	g := newGame()
 	p := g.CurrentPlayer()
 
-	p.HomeArea[1] = true
-	p.HomeArea[2] = true
-	p.HomeArea[3] = true
+	p.HomeArea[1] = p.Pin(1)
+	p.HomeArea[2] = p.Pin(2)
+	p.HomeArea[3] = p.Pin(3)
 
 	if g.GameOver() == true {
 		t.Errorf("p.GameOver() = true, want false")
 	}
 
-	p.HomeArea[0] = true
+	p.HomeArea[0] = p.Pin(0)
 
 	if g.GameOver() == false {
 		t.Errorf("p.GameOver() = false, want true")
