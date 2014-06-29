@@ -5,21 +5,27 @@ import "math/rand"
 var StartField map[Color]int = map[Color]int{Yellow: 0, Red: 10, Blue: 20, Green: 30}
 
 type Player struct {
+	game     *Game
 	Color    Color
 	OutArea  int
 	Position []int  // of pieces on board
 	HomeArea []bool // piece in home[0,1,2,3] ?
 }
 
-func NewPlayer(c Color) *Player {
-	p := Player{OutArea: 4, Color: c, Position: make([]int, 0), HomeArea: make([]bool, 4)}
+func NewPlayer(g *Game, c Color) *Player {
+	p := Player{
+		game:     g,
+		OutArea:  4,
+		Color:    c,
+		Position: make([]int, 0),
+		HomeArea: make([]bool, 4)}
 	return &p
 }
 
-func createPlayers(playerColors []Color) []*Player {
+func NewPlayers(g *Game, playerColors []Color) []*Player {
 	players := make([]*Player, len(playerColors))
 	for i, _ := range players {
-		players[i] = NewPlayer(playerColors[i])
+		players[i] = NewPlayer(g, playerColors[i])
 	}
 	return players
 }
@@ -55,19 +61,19 @@ func (p *Player) StartField() int {
 	return StartField[p.Color]
 }
 
-func (p *Player) IsOwnPieceOnField(g *Game, field int) bool {
-	return g.Fields[field] == p.Color
+func (p *Player) IsOwnPieceOnField(field int) bool {
+	return p.game.Fields[field] == p.Color
 }
 
-func (p *Player) CanMoveTo(g *Game, field int) bool {
-	return !p.IsOwnPieceOnField(g, field)
+func (p *Player) CanMoveTo(field int) bool {
+	return !p.IsOwnPieceOnField(field)
 }
 
-func (p *Player) PlayMoveWithDice(g *Game, dice int) {
+func (p *Player) PlayMoveWithDice(dice int) {
 	start := StartField[p.Color]
 
-	if dice == 6 && p.OutArea > 0 && p.CanMoveTo(g, start) {
-		g.Fields[start] = p.Color
+	if dice == 6 && p.OutArea > 0 && p.CanMoveTo(start) {
+		p.game.Fields[start] = p.Color
 		p.OutArea = p.OutArea - 1
 		p.Position = append(p.Position, start)
 	}

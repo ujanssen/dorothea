@@ -9,19 +9,21 @@ import (
 
 // The dice has number from 1 to 6
 func TestPlayerThrowDice(t *testing.T) {
+	g := newGame()
 	n := 1
-	p := dorothea.NewPlayer(dorothea.Green)
+	p := dorothea.NewPlayer(g, dorothea.Green)
 	for n < 1000 {
 		number := p.ThrowDice()
 		if number < 1 || number > 6 {
-			t.Errorf("p.TrowDice() = %v, want number < 1 && number > 6", number)
+			t.Errorf("p.TrowDice() = %v, want number 1,2,3,4,5 or 6", number)
 		}
 		n = n + 1
 	}
 }
 
 func TestPlayerHasWon(t *testing.T) {
-	p := dorothea.NewPlayer(dorothea.Green)
+	g := newGame()
+	p := dorothea.NewPlayer(g, dorothea.Green)
 
 	p.HomeArea[1] = true
 	p.HomeArea[2] = true
@@ -43,7 +45,7 @@ func TestPlayerOnStartThrowsASix(t *testing.T) {
 	p := g.CurrentPlayer()
 	start := p.StartField()
 
-	p.PlayMoveWithDice(g, 6)
+	p.PlayMoveWithDice(6)
 
 	if p.OutArea != 3 {
 		t.Errorf("p.OutArea = %v, want 3", p.OutArea)
