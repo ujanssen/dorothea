@@ -30,8 +30,8 @@ func TestGameWith5Players(t *testing.T) {
 func TestGameOutAreaAtStart(t *testing.T) {
 	g, _ := dorothea.NewGame(getNPlayerColors(4))
 	for _, player := range g.Players {
-		if player.OutArea != 4 {
-			t.Errorf("player.OutArea = %v, want 4", player.OutArea)
+		if player.PiecesInOutArea() != 4 {
+			t.Errorf("player.OutArea = %v, want 4", player.PiecesInOutArea())
 		}
 	}
 }
@@ -77,15 +77,15 @@ func TestGameOver(t *testing.T) {
 	g := newGame()
 	p := g.CurrentPlayer()
 
-	p.HomeArea[1] = p.Pin(1)
-	p.HomeArea[2] = p.Pin(2)
-	p.HomeArea[3] = p.Pin(3)
+	p.MovePinToHomeArea(1, 1)
+	p.MovePinToHomeArea(2, 2)
+	p.MovePinToHomeArea(3, 3)
 
 	if g.GameOver() == true {
 		t.Errorf("p.GameOver() = true, want false")
 	}
 
-	p.HomeArea[0] = p.Pin(0)
+	p.MovePinToHomeArea(0, 0)
 
 	if g.GameOver() == false {
 		t.Errorf("p.GameOver() = false, want true")

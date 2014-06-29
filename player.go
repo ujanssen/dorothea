@@ -5,22 +5,15 @@ import "math/rand"
 var StartField map[Color]int = map[Color]int{Yellow: 0, Red: 10, Blue: 20, Green: 30}
 
 type Player struct {
-	game     *Game
-	Color    Color
-	OutArea  int
-	Position []int   // of pieces on board
-	HomeArea [4]*Pin // pin in home[0,1,2,3] ?
-	pins     [4]*Pin
+	game  *Game
+	Color Color
+	pins  [4]*Pin
 }
 
 func NewPlayer(g *Game, c Color) *Player {
-	var homeArea [4]*Pin
 	p := &Player{
-		game:     g,
-		OutArea:  4,
-		Color:    c,
-		Position: make([]int, 0),
-		HomeArea: homeArea}
+		game:  g,
+		Color: c}
 
 	p.pins = NewPins(p)
 	return p
@@ -45,12 +38,40 @@ func (p *Player) HasWon() bool {
 
 func (p *Player) PiecesInHomeArea() int {
 	number := 0
-	for _, piece := range p.HomeArea {
-		if piece != nil {
-			number = number + 1
+	for _, pin := range p.pins {
+		if pin.IsInHomeArea() {
+			number++
 		}
 	}
 	return number
+}
+func (p *Player) PiecesInOutArea() int {
+	number := 0
+	for _, pin := range p.pins {
+		if pin.IsInOutArea() {
+			number++
+		}
+	}
+	return number
+}
+
+func (p *Player) PiecesOnField() int {
+	number := 0
+	for _, pin := range p.pins {
+		if pin.IsOnField() {
+			number++
+		}
+	}
+	return number
+}
+
+func (p *Player) GetPinOnField(field int) *Pin {
+	for _, pin := range p.pins {
+		if pin.IsOnField() && pin.FieldIndex() == field {
+			return pin
+		}
+	}
+	return nil
 }
 
 /* unused
@@ -80,9 +101,20 @@ func (p *Player) CanMoveTo(field int) bool {
 func (p *Player) PlayMoveWithDice(dice int) {
 	start := StartField[p.Color]
 
-	if dice == 6 && p.OutArea > 0 && p.CanMoveTo(start) {
+	if dice == 6 && p.PiecesInOutArea() > 0 && p.CanMoveTo(start) {
 		p.game.SetPlayerOnField(p, start)
-		p.OutArea = p.OutArea - 1
-		p.Position = append(p.Position, start)
+		p.MovePinFromOutAreaToField(start)
 	}
+}
+
+func (p *Player) MovePinFromOutAreaToField(field int) {
+	for _, pin := range p.pins {
+		if pin.IsInOutArea() {
+			pin.MovePinFromOutAreaToField(field)
+			return
+		}
+	}
+}
+func (p *Player) MovePinToHomeArea(iPin, iHome int) {
+	p.pins[iPin].MoveToHomeArea(iHome)
 }
