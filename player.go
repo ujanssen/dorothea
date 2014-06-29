@@ -10,6 +10,7 @@ type Player struct {
 	OutArea  int
 	Position []int  // of pieces on board
 	HomeArea []bool // piece in home[0,1,2,3] ?
+	pins     [4]Pin
 }
 
 func NewPlayer(g *Game, c Color) *Player {
